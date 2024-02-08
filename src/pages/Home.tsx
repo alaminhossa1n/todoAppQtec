@@ -1,8 +1,9 @@
+import AddTodoForm from "../components/AddTodoForm";
 
 const Home = () => {
   return (
     <div>
-      <h1>Todos Are comming</h1>
+      <AddTodoForm />
     </div>
   );
 };
