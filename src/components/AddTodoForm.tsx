@@ -1,136 +1,70 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { addTodo } from "../redux/features/todoSlice";
 
 const AddTodoForm = () => {
-  const [formData, setFormData] = useState({
-    id: "",
-    title: "",
-    description: "",
-    priority: "low",
-    isCompleted: false,
-  });
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  //redux
   const dispatch = useAppDispatch();
-  const todos = useAppSelector((state) => state.todos);
+  const [task, setTask] = useState("");
+  const [priority, setPriority] = useState("low");
 
-  console.log(todos);
+  const generateUniqueId = () => "_" + Math.random().toString(36).substr(2, 9);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log("Form submitted:", formData);
-    dispatch(addTodo(formData));
+    const id = generateUniqueId();
+
+    dispatch(addTodo({ title: task, description: "", priority, id }));
+    setTask("");
+    setPriority("low");
   };
 
   return (
-    <div className="container mx-auto mt-8">
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-        <div className="mb-4">
-          <label
-            htmlFor="id"
-            className="block text-sm font-medium text-gray-600"
-          >
-            ID
-          </label>
+    <div className="flex justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="mx-auto max-w-md bg-white shadow-md rounded-md p-6"
+      >
+        <div className="flex gap-4 items-center">
           <input
             type="text"
-            id="id"
-            name="id"
-            value={formData.id}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-            required
+            name="task"
+            placeholder="Add a new task..."
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
           />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="priority"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Priority
-          </label>
           <select
-            id="priority"
             name="priority"
-            value={formData.priority}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-            required
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+            className="p-2 border-2 border-gray-300 rounded-full focus:outline-none focus:border-blue-500"
           >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            {["low", "medium", "high"].map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
           </select>
+          <button
+            type="submit"
+            className="text-white bg-blue-500 hover:bg-blue-600 rounded-full p-2 focus:outline-none focus:ring focus:border-blue-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </button>
         </div>
-
-        <div className="mb-4">
-          <label htmlFor="isCompleted" className="flex items-center">
-            <input
-              type="checkbox"
-              id="isCompleted"
-              name="isCompleted"
-              checked={formData.isCompleted}
-              onChange={handleChange}
-              className="mr-2"
-            />
-            <span className="text-sm font-medium text-gray-600">
-              Is Completed
-            </span>
-          </label>
-        </div>
-
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-        >
-          Submit
-        </button>
       </form>
     </div>
   );
