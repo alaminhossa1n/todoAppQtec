@@ -3,8 +3,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { removeTodo, updateTodoStatus } from "../redux/features/todoSlice";
 import Modal from "./Modal";
 
-const TaskCard = () => {
-  const tasks = useAppSelector((state) => state.todos.todos);
+const TaskCard = ({ tasks }) => {
   const dispatch = useAppDispatch();
 
   const handleMarkComplete = (taskId: string) => {
