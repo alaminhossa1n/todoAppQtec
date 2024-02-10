@@ -12,7 +12,6 @@ const TaskCard = () => {
   };
 
   const handleDeleteTask = (taskId: string) => {
-
     dispatch(removeTodo(taskId));
   };
 
@@ -27,21 +26,22 @@ const TaskCard = () => {
         >
           <div className="flex-1">
             <h3
-              className={`text-lg font-medium ${
+              className={`text-2xl font-bold ${
                 task.isCompleted ? "text-gray-600" : "text-violet-600"
               }`}
             >
               {task.title}
             </h3>
-            <p className="text-gray-600">{task.description}</p>
+            <p className="text-lg text-gray-600">{task.description}</p>
             <p
-              className={`text-sm ${task.isCompleted ? "text-gray-600" : ""} ${
+              className={`font-semibold ${
                 task.priority === "low" ? "text-yellow-600" : ""
-              } ${task.priority === "medium" ? "text-orange-600" : ""} ${
+              } ${task.priority === "medium" ? "text-orange-400" : ""} ${
                 task.priority === "high" ? "text-red-600" : ""
               }`}
             >{`Priority: ${task.priority}`}</p>
           </div>
+
           <div className="flex items-center space-x-4">
             <button
               onClick={() => handleDeleteTask(task.id)}
