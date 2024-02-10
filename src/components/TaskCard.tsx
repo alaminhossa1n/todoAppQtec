@@ -12,7 +12,7 @@ const TaskCard = () => {
   };
 
   const handleDeleteTask = (taskId: string) => {
-    console.log(taskId);
+
     dispatch(removeTodo(taskId));
   };
 

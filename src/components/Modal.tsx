@@ -29,8 +29,7 @@ const Modal = ({ task }) => {
       description,
       priority,
     };
-    console.log(updatedDoc);
-
+  
     dispatch(todoUpdate(updatedDoc));
 
     setTitle("");

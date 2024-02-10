@@ -18,7 +18,8 @@ const Home = () => {
   });
 
   return (
-    <div className="border mt-20 p-10">
+    <div className="p-10">
+     
       <AddTodoForm />
       <div className="w-3/4 mt-5 mx-auto px-3 border-2 border-violet-500 rounded-md">
         <h2 className="text-2xl text-center font-bold mb-4 text-violet-800">
