@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { addTodo } from "../redux/features/todoSlice";
 
 const AddTodoForm = () => {
   const dispatch = useAppDispatch();
-  const [task, setTask] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("low");
 
   const generateUniqueId = () => "_" + Math.random().toString(36).substr(2, 9);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const id = generateUniqueId();
 
-    dispatch(addTodo({ title: task, description: "", priority, id }));
-    setTask("");
+    dispatch(addTodo({ title, description, priority, id }));
+    setTitle("");
+    setDescription("");
     setPriority("low");
   };
 
@@ -22,15 +24,23 @@ const AddTodoForm = () => {
     <div className="flex justify-center">
       <form
         onSubmit={handleSubmit}
-        className="mx-auto max-w-md bg-white shadow-md rounded-md p-6"
+        className="mx-auto max-lg: bg-white shadow-md rounded-md p-6"
       >
         <div className="flex gap-4 items-center">
           <input
             type="text"
-            name="task"
+            name="title"
             placeholder="Add a new task..."
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+          />
+          <input
+            type="text"
+            name="description"
+            placeholder="Add Description..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
           />
           <select

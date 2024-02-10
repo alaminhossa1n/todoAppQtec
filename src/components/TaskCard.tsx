@@ -1,24 +1,21 @@
-import { BsPencil, BsTrash } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { removeTodo, updateTodoStatus } from "../redux/features/todoSlice";
+import Modal from "./Modal";
 
 const TaskCard = () => {
   const tasks = useAppSelector((state) => state.todos.todos);
   const dispatch = useAppDispatch();
 
-  const handleMarkComplete = (taskId) => {
+  const handleMarkComplete = (taskId: string) => {
     dispatch(updateTodoStatus(taskId));
   };
 
-  const handleDeleteTask = (taskId) => {
+  const handleDeleteTask = (taskId: string) => {
     console.log(taskId);
-    dispatch(removeTodo(taskId))
+    dispatch(removeTodo(taskId));
   };
 
-  const handleEditTask = (taskId) => {
-    // Add your edit task logic here
-    console.log("Edit task:", taskId);
-  };
   return (
     <div className="mx-auto max-w-full mt-8">
       {tasks.map((task) => (
@@ -38,6 +35,7 @@ const TaskCard = () => {
             >
               {task.title}
             </h3>
+            <p>{task.description}</p>
             <span
               className={`text-sm ${
                 task.isCompleted ? "text-green-200" : "text-gray-500"
@@ -45,6 +43,13 @@ const TaskCard = () => {
             >{`Priority: ${task.priority}`}</span>
           </div>
           <div className="flex items-center space-x-4">
+            <button
+              onClick={() => handleDeleteTask(task.id)}
+              className="text-red-500 hover:text-red-600 focus:outline-none focus:ring focus:border-red-300 text-3xl"
+            >
+              <BsTrash />
+            </button>
+            <Modal task={task} />
             <input
               type="checkbox"
               name=""
@@ -52,18 +57,6 @@ const TaskCard = () => {
               className="size-5"
               onChange={() => handleMarkComplete(task.id)}
             />
-            <button
-              onClick={() => handleDeleteTask(task.id)}
-              className="text-red-500 hover:text-red-600 focus:outline-none focus:ring focus:border-red-300 text-3xl"
-            >
-              <BsTrash />
-            </button>
-            <button
-              onClick={() => handleEditTask(task.id)}
-              className="text-2xl"
-            >
-              <BsPencil />
-            </button>
           </div>
         </div>
       ))}

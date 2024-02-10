@@ -1,80 +1,99 @@
-import { Dialog, Transition } from "@headlessui/react";
-import AddTodoForm from "../components/AddTodoForm";
-import { Fragment, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "./ui/dialog";
 
-const Modal = () => {
-  const [isOpen, setIsOpen] = useState(true);
+import { Button } from "./ui/button";
+import { BsPencil } from "react-icons/bs";
+import { useAppDispatch } from "@/redux/hooks";
+import { FormEvent, useState } from "react";
+import { todoUpdate } from "../redux/features/todoSlice";
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+const Modal = ({ task }) => {
+  const dispatch = useAppDispatch();
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("low");
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const updatedDoc = {
+      id: task.id,
+      title,
+      description,
+      priority,
+    };
+    console.log(updatedDoc);
+
+    dispatch(todoUpdate(updatedDoc));
+
+    setTitle("");
+    setDescription("");
+    setPriority("low");
+  };
+
   return (
     <div>
-      <div className="fixed inset-0 flex items-center justify-center">
-        <button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-        >
-          Open dialog
-        </button>
-      </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <button className="text-2xl text-yellow-500">
+            <BsPencil />
+          </button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <form onSubmit={handleSubmit}>
+            <DialogHeader>
+              <DialogTitle>Edit Task</DialogTitle>
+              <DialogDescription>
+                Make changes to your profile here. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
 
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+            <div className="space-y-3">
+              <input
+                type="text"
+                name="title"
+                defaultValue={task.title}
+                placeholder="Add a new task..."
+                onChange={(e) => setTitle(e.target.value)}
+                className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+              />
+              <input
+                type="text"
+                name="description"
+                defaultValue={task.description}
+                placeholder="Add Description..."
+                onChange={(e) => setDescription(e.target.value)}
+                className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+              />
+              <select
+                name="priority"
+                defaultValue={task.priority}
+                onChange={(e) => setPriority(e.target.value)}
+                className="p-2 border-2 border-gray-300 rounded-full focus:outline-none focus:border-blue-500 px-3"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Add Task
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <AddTodoForm />
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
+                {["low", "medium", "high"].map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
-        </Dialog>
-      </Transition>
+
+            <div className="flex justify-end mt-3">
+              <DialogClose>
+                <Button type="submit">Update</Button>
+              </DialogClose>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

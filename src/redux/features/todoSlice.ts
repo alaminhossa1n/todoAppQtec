@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type TTodos = {
+export type TTodos = {
   id: string;
   title: string;
   description: string;
@@ -31,8 +31,19 @@ export const todoSlice = createSlice({
       const task = state.todos.find((item) => item.id === action.payload);
       task!.isCompleted = !task?.isCompleted;
     },
+    todoUpdate: (state, action) => {
+      const { id, title, description, priority } = action.payload;
+      const toUpdate = state.todos.find((item) => item.id === id);
+
+      if (toUpdate) {
+        toUpdate.title = title || toUpdate.title;
+        toUpdate.description = description || toUpdate.description;
+        toUpdate.priority = priority || toUpdate.priority;
+      }
+    },
   },
 });
 
-export const { addTodo, removeTodo, updateTodoStatus } = todoSlice.actions;
+export const { addTodo, removeTodo, updateTodoStatus, todoUpdate } =
+  todoSlice.actions;
 export default todoSlice.reducer;
