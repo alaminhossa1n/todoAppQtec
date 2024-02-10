@@ -27,13 +27,15 @@ const Home = () => {
     }
 
     if (priorityFilter !== "all") {
-      filteredData = filteredData.filter((task) => task.priority === priorityFilter);
+      filteredData = filteredData.filter(
+        (task) => task.priority === priorityFilter
+      );
     }
 
     setFilteredTodos(filteredData);
   }, [todos, filter, priorityFilter]);
 
-  const handlePriorityChange = (value) => {
+  const handlePriorityChange = (value: string) => {
     setPriorityFilter(value);
   };
 
@@ -74,7 +76,8 @@ const Home = () => {
                   : "text-gray-500"
               } hover:text-red-600 focus:outline-none`}
             >
-              Not Completed {`(${todos.filter((task) => !task.isCompleted).length})`}
+              Not Completed{" "}
+              {`(${todos.filter((task) => !task.isCompleted).length})`}
             </button>
           </div>
 

@@ -1,11 +1,12 @@
 import { BsTrash } from "react-icons/bs";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { removeTodo, updateTodoStatus } from "../redux/features/todoSlice";
 import Modal from "./Modal";
+import { TTodos } from "@/types";
 
-const TaskCard = ({ tasks }) => {
+const TaskCard: React.FC<{ tasks: TTodos[] }> = ({ tasks }) => {
   const dispatch = useAppDispatch();
-
+  console.log(tasks);
   const handleMarkComplete = (taskId: string) => {
     dispatch(updateTodoStatus(taskId));
   };

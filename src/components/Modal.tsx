@@ -13,8 +13,10 @@ import { BsPencil } from "react-icons/bs";
 import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
 import { todoUpdate } from "../redux/features/todoSlice";
+import { TTodos } from "@/types";
 
-const Modal = ({ task }) => {
+const Modal: React.FC<{ task: TTodos }> = ({ task }) => {
+  console.log(task);
   const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState("");
@@ -29,7 +31,7 @@ const Modal = ({ task }) => {
       description,
       priority,
     };
-  
+
     dispatch(todoUpdate(updatedDoc));
 
     setTitle("");
