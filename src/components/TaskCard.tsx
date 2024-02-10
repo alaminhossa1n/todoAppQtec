@@ -1,20 +1,18 @@
 import { BsPencil, BsTrash } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { Switch } from "@headlessui/react";
-import { updateTodoStatus } from "../redux/features/todoSlice";
+import { removeTodo, updateTodoStatus } from "../redux/features/todoSlice";
 
 const TaskCard = () => {
   const tasks = useAppSelector((state) => state.todos.todos);
   const dispatch = useAppDispatch();
 
   const handleMarkComplete = (taskId) => {
-    console.log(taskId);
     dispatch(updateTodoStatus(taskId));
-
   };
 
   const handleDeleteTask = (taskId) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    console.log(taskId);
+    dispatch(removeTodo(taskId))
   };
 
   const handleEditTask = (taskId) => {
@@ -47,21 +45,13 @@ const TaskCard = () => {
             >{`Priority: ${task.priority}`}</span>
           </div>
           <div className="flex items-center space-x-4">
-            <Switch
-              checked={tasks.isCompleted}
-              onChange={()=>handleMarkComplete(task.id)}
-              className={`${tasks.isCompleted ? "bg-teal-900" : "bg-gray-600"}
-          relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={`${
-                  tasks.isCompleted ? "translate-x-9" : "translate-x-0"
-                }
-            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-              />
-            </Switch>
+            <input
+              type="checkbox"
+              name=""
+              id=""
+              className="size-5"
+              onChange={() => handleMarkComplete(task.id)}
+            />
             <button
               onClick={() => handleDeleteTask(task.id)}
               className="text-red-500 hover:text-red-600 focus:outline-none focus:ring focus:border-red-300 text-3xl"
