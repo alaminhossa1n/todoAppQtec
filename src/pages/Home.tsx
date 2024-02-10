@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddTodoForm from "../components/AddTodoForm";
 import TaskCard from "../components/TaskCard";
 import { useAppSelector } from "../redux/hooks";
@@ -6,20 +6,27 @@ import { useAppSelector } from "../redux/hooks";
 const Home = () => {
   const todos = useAppSelector((state) => state.todos.todos);
   const [filter, setFilter] = useState("all");
+  const [filteredTodos, setFilteredTodos] = useState(todos);
 
-  const filteredTodos = todos.filter((task) => {
-    if (filter === "completed") {
-      return task.isCompleted;
-    } else if (filter === "notCompleted") {
-      return !task.isCompleted;
-    } else {
-      return true;
-    }
+  const countCompleted = todos.filter((item) => {
+    return item.isCompleted;
   });
+
+  useEffect(() => {
+    const filteredTodos = todos.filter((task) => {
+      if (filter === "completed") {
+        return task.isCompleted;
+      } else if (filter === "notCompleted") {
+        return !task.isCompleted;
+      } else {
+        return true;
+      }
+    });
+    setFilteredTodos(filteredTodos)
+  }, [todos, filter]);
 
   return (
     <div className="p-10">
-     
       <AddTodoForm />
       <div className="w-3/4 mt-5 mx-auto px-3 border-2 border-violet-500 rounded-md">
         <h2 className="text-2xl text-center font-bold mb-4 text-violet-800">
@@ -33,7 +40,7 @@ const Home = () => {
               filter === "all" ? "text-violet-700 font-bold" : "text-gray-500"
             } hover:text-violet-700 focus:outline-none`}
           >
-            All
+            All {`(${filteredTodos.length})`}
           </button>
           <button
             onClick={() => setFilter("completed")}
@@ -43,7 +50,7 @@ const Home = () => {
                 : "text-gray-500"
             } hover:text-green-600 focus:outline-none`}
           >
-            Completed
+            Completed {`(${countCompleted.length})`}
           </button>
           <button
             onClick={() => setFilter("notCompleted")}
@@ -53,7 +60,7 @@ const Home = () => {
                 : "text-gray-500"
             } hover:text-red-600 focus:outline-none`}
           >
-            Not Completed
+            Not Completed {`(${todos.length - countCompleted.length})`}
           </button>
         </div>
         {filteredTodos.length ? (
