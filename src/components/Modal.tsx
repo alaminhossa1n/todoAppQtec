@@ -16,7 +16,7 @@ import { todoUpdate } from "../redux/features/todoSlice";
 import { TTodos } from "@/types";
 
 const Modal: React.FC<{ task: TTodos }> = ({ task }) => {
-  console.log(task);
+
   const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState("");

@@ -6,7 +6,7 @@ import { TTodos } from "@/types";
 
 const TaskCard: React.FC<{ tasks: TTodos[] }> = ({ tasks }) => {
   const dispatch = useAppDispatch();
-  console.log(tasks);
+
   const handleMarkComplete = (taskId: string) => {
     dispatch(updateTodoStatus(taskId));
   };
