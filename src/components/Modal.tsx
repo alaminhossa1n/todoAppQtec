@@ -51,18 +51,18 @@ const Modal = ({ task }) => {
             <DialogHeader>
               <DialogTitle>Edit Task</DialogTitle>
               <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
+                Make changes to the task here. Click save when you're done.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-3">
+            <div className="space-y-3 mt-2">
               <input
                 type="text"
                 name="title"
                 defaultValue={task.title}
                 placeholder="Add a new task..."
                 onChange={(e) => setTitle(e.target.value)}
-                className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                className="border-2 border-violet-700 rounded-full px-4 py-2 w-full focus:outline-none focus:border-violet-900 text-violet-900 placeholder-violet-400"
               />
               <input
                 type="text"
@@ -70,13 +70,13 @@ const Modal = ({ task }) => {
                 defaultValue={task.description}
                 placeholder="Add Description..."
                 onChange={(e) => setDescription(e.target.value)}
-                className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                className="border-2 border-violet-700 rounded-full px-4 py-2 w-full focus:outline-none focus:border-violet-900 text-violet-900 placeholder-violet-400"
               />
               <select
                 name="priority"
                 defaultValue={task.priority}
                 onChange={(e) => setPriority(e.target.value)}
-                className="p-2 border-2 border-gray-300 rounded-full focus:outline-none focus:border-blue-500 px-3"
+                className="p-2 border-2 border-violet-700 rounded-full focus:outline-none focus:border-violet-900 text-violet-900 px-3"
               >
                 {["low", "medium", "high"].map((p) => (
                   <option key={p} value={p}>
@@ -88,7 +88,12 @@ const Modal = ({ task }) => {
 
             <div className="flex justify-end mt-3">
               <DialogClose>
-                <Button type="submit">Update</Button>
+                <Button
+                  type="submit"
+                  className="text-white bg-violet-700 hover:bg-violet-800  p-2 focus:outline-none focus:ring focus:border-violet-500"
+                >
+                  Update
+                </Button>
               </DialogClose>
             </div>
           </form>

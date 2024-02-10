@@ -24,7 +24,7 @@ const AddTodoForm = () => {
     <div className="flex justify-center">
       <form
         onSubmit={handleSubmit}
-        className="mx-auto max-lg: bg-white shadow-md rounded-md p-6"
+        className="mx-auto max-lg bg-violet-500 shadow-md rounded-md p-6"
       >
         <div className="flex gap-4 items-center">
           <input
@@ -33,7 +33,7 @@ const AddTodoForm = () => {
             placeholder="Add a new task..."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+            className="border-2 border-violet-700 rounded-full px-4 py-2 w-full focus:outline-none focus:border-violet-900 text-violet-900 placeholder-violet-400"
           />
           <input
             type="text"
@@ -41,13 +41,13 @@ const AddTodoForm = () => {
             placeholder="Add Description..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="border-2 border-gray-300 rounded-full px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+            className="border-2 border-violet-700 rounded-full px-4 py-2 w-full focus:outline-none focus:border-violet-900 text-violet-900 placeholder-violet-400"
           />
           <select
             name="priority"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
-            className="p-2 border-2 border-gray-300 rounded-full focus:outline-none focus:border-blue-500"
+            className="p-2 border-2 border-violet-700 rounded-full focus:outline-none focus:border-violet-900 text-violet-900"
           >
             {["low", "medium", "high"].map((p) => (
               <option key={p} value={p}>
@@ -57,7 +57,7 @@ const AddTodoForm = () => {
           </select>
           <button
             type="submit"
-            className="text-white bg-blue-500 hover:bg-blue-600 rounded-full p-2 focus:outline-none focus:ring focus:border-blue-300"
+            className="text-white bg-violet-700 hover:bg-violet-800 rounded-full p-2 focus:outline-none focus:ring focus:border-violet-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

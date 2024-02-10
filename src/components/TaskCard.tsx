@@ -17,44 +17,50 @@ const TaskCard = () => {
   };
 
   return (
-    <div className="mx-auto max-w-full mt-8">
+    <div className="mx-auto mt-8">
       {tasks.map((task) => (
         <div
           key={task.id}
-          className={`flex items-center justify-between p-4 mb-4 bg-${
-            task.isCompleted ? "green" : "white"
-          } rounded-md border ${
-            task.isCompleted ? "border-green-500" : "border-gray-300"
-          }`}
+          className={`flex items-center justify-between p-4 mb-4 w-full bg-gray-100 border rounded-md ${
+            task.isCompleted ? "line-through opacity-40" : ""
+          } shadow-lg`}
         >
-          <div>
+          <div className="flex-1">
             <h3
               className={`text-lg font-medium ${
-                task.isCompleted ? "text-white" : "text-gray-800"
+                task.isCompleted ? "text-gray-600" : "text-violet-600"
               }`}
             >
               {task.title}
             </h3>
-            <p>{task.description}</p>
-            <span
-              className={`text-sm ${
-                task.isCompleted ? "text-green-200" : "text-gray-500"
+            <p className="text-gray-600">{task.description}</p>
+            <p
+              className={`text-sm ${task.isCompleted ? "text-gray-600" : ""} ${
+                task.priority === "low" ? "text-yellow-600" : ""
+              } ${task.priority === "medium" ? "text-orange-600" : ""} ${
+                task.priority === "high" ? "text-red-600" : ""
               }`}
-            >{`Priority: ${task.priority}`}</span>
+            >{`Priority: ${task.priority}`}</p>
           </div>
           <div className="flex items-center space-x-4">
             <button
               onClick={() => handleDeleteTask(task.id)}
-              className="text-red-500 hover:text-red-600 focus:outline-none focus:ring focus:border-red-300 text-3xl"
+              className={`text-red-500 hover:text-red-600 focus:outline-none focus:ring focus:border-red-300 text-2xl ${
+                task.isCompleted ? "text-gray-500 cursor-not-allowed" : ""
+              }`}
+              disabled={task.isCompleted}
             >
               <BsTrash />
             </button>
-            <Modal task={task} />
+            <div>
+              <Modal task={task} />
+            </div>
             <input
               type="checkbox"
               name=""
               id=""
-              className="size-5"
+              className="form-checkbox h-5 w-5 text-green-500 focus:outline-none focus:ring focus:border-blue-300"
+              checked={task.isCompleted}
               onChange={() => handleMarkComplete(task.id)}
             />
           </div>
