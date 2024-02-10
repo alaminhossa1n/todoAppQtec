@@ -21,7 +21,9 @@ const Home = () => {
     <div className="border mt-20 p-10">
       <AddTodoForm />
       <div className="w-3/4 mt-5 mx-auto px-3 border-2 border-violet-500 rounded-md">
-        <h2 className="text-2xl text-center font-bold mb-4 text-violet-800">Your Tasks</h2>
+        <h2 className="text-2xl text-center font-bold mb-4 text-violet-800">
+          Your Tasks
+        </h2>
         <div className="flex items-center space-x-3 mb-4">
           <span className="text-gray-700 font-bold">Filter:</span>
           <button
@@ -54,7 +56,7 @@ const Home = () => {
           </button>
         </div>
         {filteredTodos.length ? (
-          <TaskCard tasks={filteredTodos} />
+          <TaskCard />
         ) : (
           <div className="p-5 text-center font-bold">
             <p>No tasks found based on the selected filter.</p>

@@ -18,7 +18,7 @@ const TaskCard = () => {
 
   return (
     <div className="mx-auto mt-8">
-      {tasks.map((task) => (
+      {tasks?.map((task) => (
         <div
           key={task.id}
           className={`flex items-center justify-between p-4 mb-4 w-full bg-gray-100 border rounded-md ${
